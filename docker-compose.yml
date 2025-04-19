@@ -4,7 +4,7 @@ services:
       context: ./patient-service
     container_name: patient-service
     ports:
-      - "8080:8080"
+      - "4000:4000"
     depends_on:
       - patient-db
     environment:
@@ -14,23 +14,23 @@ services:
     networks:
       - microservice-net
 
-  appointment-service:
-    build:
-      context: ./appointment-service
-    container_name: appointment-service
-    ports:
-      - "8081:8080"
-    depends_on:
-      - patient-db
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://patient-db:5432/appointmentdb
-      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER}
-      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD}
-    networks:
-      - microservice-net
+#  appointment-service:
+#    build:
+#      context: ./appointment-service
+#    container_name: appointment-service
+#    ports:
+#      - "8081:8080"
+#    depends_on:
+#      - patient-db
+#    environment:
+#      SPRING_DATASOURCE_URL: jdbc:postgresql://patient-db:5432/appointmentdb
+#      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER}
+#      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD}
+#    networks:
+#      - microservice-net
 
   patient-db:
-    image: postgres:15
+    image: postgres
     container_name: patient-db
     ports:
       - "5432:5432"
