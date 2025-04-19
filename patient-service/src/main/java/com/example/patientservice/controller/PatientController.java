@@ -31,19 +31,23 @@ public class PatientController {
 
         return ResponseEntity.ok().body(patients);
    }
+
    @PostMapping
+   @Operation(summary="Create a new patient")
     public ResponseEntity<PatientResponseDTO> createPatient(@RequestBody @Validated({Default.class, CreatePatientValidationGroup.class}) PatientRequestDTO patientRequestDTO) {
         PatientResponseDTO patientResponseDTO=patientService.createPatient(patientRequestDTO);
         return ResponseEntity.ok().body(patientResponseDTO);
    }
 
    @PutMapping("/{id}")
+   @Operation(summary="Update a new patient")
     public ResponseEntity<PatientResponseDTO> updatePatient(@PathVariable UUID id, @RequestBody @Validated({Default.class}) PatientRequestDTO patientRequestDTO) {
         PatientResponseDTO patientResponseDTO=patientService.updatePatient(id,patientRequestDTO);
         return ResponseEntity.ok().body(patientResponseDTO);
    }
    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletePatient(@PathVariable UUID id) {
+   @Operation(summary="Delete a  patient")
+   public ResponseEntity<Void> deletePatient(@PathVariable UUID id) {
         patientService.deletePatient(id);
         return ResponseEntity.noContent().build();
 
