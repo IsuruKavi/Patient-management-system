@@ -13,7 +13,16 @@ services:
       SPRING_DATASOURCE_PASSWORD: password
     networks:
       - microservice-net
+  billing-service:
+    build:
+      context: ./billing-service
+    container_name: billing-service
+    ports:
+      - "4001:4001" #Rest API
+      - "9001:9001" #grpc
 
+    networks:
+      - microservice-net
 #  appointment-service:
 #    build:
 #      context: ./appointment-service
