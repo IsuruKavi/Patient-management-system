@@ -7,10 +7,13 @@ services:
       - "4000:4000"
     depends_on:
       - patient-db
+      - billing-service
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://patient-db:5432/db
       SPRING_DATASOURCE_USERNAME: admin_user
       SPRING_DATASOURCE_PASSWORD: password
+      BILLING_SERVICE_ADDRESS: billing-service
+      BILLING_SERVICE_GRPC_PORT: 9001
     networks:
       - microservice-net
   billing-service:
@@ -20,7 +23,6 @@ services:
     ports:
       - "4001:4001" #Rest API
       - "9001:9001" #grpc
-
     networks:
       - microservice-net
 #  appointment-service:

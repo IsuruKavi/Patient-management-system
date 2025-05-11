@@ -1,0 +1,1 @@
+## if can't resolve depenedency ,-> right click on pom.xml file and then unlink maven project and then import again, issue will be fixed most of the time.! 
