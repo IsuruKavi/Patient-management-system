@@ -58,6 +58,8 @@ services:
     build:
       context: ./analytics-service
     container_name: analytics-service
+    depends_on:
+      - kafka
     ports:
       - "4002:4002"
     environment:
@@ -78,6 +80,7 @@ services:
      KAFKA_CFG_ADVERTISED_LISTENERS: ${KAFKA_CFG_ADVERTISED_LISTENERS}
      KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP: ${KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP}
      KAFKA_CFG_INTER_BROKER_LISTENER_NAME: ${KAFKA_CFG_INTER_BROKER_LISTENER_NAME}
+     KAFKA_CFG_CONTROLLER_LISTENER_NAMES: ${KAFKA_CFG_CONTROLLER_LISTENER_NAMES}
    networks:
     - microservice-net
 volumes:
