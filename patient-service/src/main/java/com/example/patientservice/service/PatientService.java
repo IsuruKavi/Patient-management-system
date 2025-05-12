@@ -6,6 +6,8 @@ import com.example.patientservice.dto.PatientResponseDTO;
 import com.example.patientservice.exception.EmailAlreadyExistsException;
 import com.example.patientservice.exception.PatientNotFoundException;
 import com.example.patientservice.grpc.BillingServiceGrpcClient;
+
+import com.example.patientservice.kafka.KafkaProducer;
 import com.example.patientservice.mapper.PatientMapper;
 import com.example.patientservice.model.Patient;
 import com.example.patientservice.repository.PatientRespository;
@@ -23,9 +25,11 @@ public class PatientService {
     private static final Logger log = LoggerFactory.getLogger(PatientService.class);
     private final PatientRespository patientRespository;
     private final BillingServiceGrpcClient billingServiceGrpcClient;
-    public PatientService(PatientRespository patientRespository, BillingServiceGrpcClient billingServiceGrpcClient) {
+    private final KafkaProducer kafkaProducer;
+    public PatientService(PatientRespository patientRespository, BillingServiceGrpcClient billingServiceGrpcClient,KafkaProducer kafkaProducer) {
         this.patientRespository = patientRespository;
         this.billingServiceGrpcClient = billingServiceGrpcClient;
+        this.kafkaProducer=kafkaProducer;
     }
     public List<PatientResponseDTO> getPatients() {
         List<Patient> patients = patientRespository.findAll();
@@ -47,7 +51,7 @@ try{
     log.info("Billing response: {}", billingResponse);}catch(Exception e){
     log.error("gRPC call to billing service failed", e);
 }
-
+         kafkaProducer.sendEvent(newPatient);
        return PatientMapper.toDTO(newPatient);
     }
     public PatientResponseDTO updatePatient(UUID id,PatientRequestDTO patientRequestDTO) {
