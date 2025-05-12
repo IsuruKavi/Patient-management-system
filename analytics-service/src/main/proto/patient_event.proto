@@ -1,0 +1,11 @@
+syntax="proto3";
+
+package patient.event;
+option java_multiple_files=true; //time stamp 5.14 for producing classed of proto file
+
+message PatientEvent {
+  string patientId=1;
+  string name=2;
+  string email=3;
+  string event_type=4;
+}
