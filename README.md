@@ -77,5 +77,3 @@ The system is divided into the following microservices:
 - Verify database connections if any service is unable to start.
 - Check API Gateway routing rules if endpoints are not responding as expected.
 
-## License
-This project is licensed under the MIT License.
